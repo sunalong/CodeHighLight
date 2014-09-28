@@ -7,9 +7,10 @@
         android:id="@+id/wvCode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+         />
 
     <ProgressBar
+        android:visibility="gone"
         android:id="@+id/pbLoading"
         style="@style/dataSpinner"
         android:layout_centerInParent="true" />
