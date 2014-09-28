@@ -15,17 +15,12 @@
  */
 package com.itcode.HighLight.util;
 
-import static org.eclipse.egit.github.core.Blob.ENCODING_BASE64;
 import static org.eclipse.egit.github.core.client.IGitHubConstants.CHARSET_UTF8;
 
 import java.io.UnsupportedEncodingException;
 
-import org.eclipse.egit.github.core.Blob;
 import org.eclipse.egit.github.core.util.EncodingUtils;
 
-import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -58,23 +53,7 @@ public class CopyOfSourceEditor {
      * @param view
      */
     public CopyOfSourceEditor(final WebView view) {
-        WebViewClient client = new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (URL_PAGE.equals(url)) {
-                    view.loadUrl(url);
-                    Log.i(TAG,"shouldOverrideUrlLoading:"+url);
-                    return false;
-                } else {
-                    Log.i(TAG,"startActivity:"+url);
-                    Context context = view.getContext();
-//                    Intent intent = new UrlLauncher(context).create(url);
-//                    context.startActivity(intent);
-                    return true;
-                }
-            }
-        };
+    	WebViewClient client = new WebViewClient();
         view.setWebViewClient(client);
 
         WebSettings settings = view.getSettings();
@@ -118,7 +97,7 @@ public class CopyOfSourceEditor {
     /**
      * @return wrap
      */
-    public boolean getWrap() {
+    public boolean isWrap() {
         return wrap;
     }
 
@@ -128,30 +107,6 @@ public class CopyOfSourceEditor {
     public boolean isMarkdown() {
         return markdown;
     }
-
-    /**
-     * Set whether lines should wrap
-     *
-     * @param wrap
-     * @return this editor
-     */
-    public CopyOfSourceEditor setWrap(final boolean wrap) {
-        this.wrap = wrap;
-        loadSource();
-        return this;
-    }
-
-    /**
-     * Sets whether the content is a markdown file
-     *
-     * @param markdown
-     * @return this editor
-     */
-    public CopyOfSourceEditor setMarkdown(final boolean markdown) {
-        this.markdown = markdown;
-        return this;
-    }
-
     /**
      * Bind content to current {@link WebView}
      *
@@ -166,57 +121,7 @@ public class CopyOfSourceEditor {
         this.content = content;
         this.encoded = encoded;
         Log.i(TAG,"setSource content:"+this.content);
-//        loadSource();
         view.loadUrl(URL_PAGE);
         return null;
-    }
-
-    private void loadSource() {
-        if (name != null && content != null)
-            if (markdown){
-                view.loadData(content, "text/html", null);
-                Log.i(TAG,"loadData content:"+content);
-            }
-//                view.loadData("LyoKICogQ29weXJpZ2h0IDIwMTIgR2l0SHViIEluYy4KICoKICogTGljZW5z", "text/html", null);
-            else{
-                Log.i(TAG,"loadUrl URL_PAGE:"+URL_PAGE);
-                view.loadUrl(URL_PAGE);
-            }
-    }
-
-    /**
-     * Bind blob content to current {@link WebView}
-     *
-     * @param name
-     * @param blob
-     * @return this editor
-     */
-    public CopyOfSourceEditor setSource(final String name, final Blob blob) {
-        String content = blob.getContent();
-        if (content == null)
-            content = "";
-        boolean encoded = !TextUtils.isEmpty(content)
-                && ENCODING_BASE64.equals(blob.getEncoding());
-        Log.i(TAG,"encoded:"+encoded);
-        Log.i(TAG,"1content:"+content);
-        return setSource(name, content, encoded);
-    }
-
-    /**
-     * Toggle line wrap
-     *
-     * @return this editor
-     */
-    public CopyOfSourceEditor toggleWrap() {
-        return setWrap(!wrap);
-    }
-
-    /**
-     * Toggle markdown file rendering
-     *
-     * @return this editor
-     */
-    public CopyOfSourceEditor toggleMarkdown() {
-        return setMarkdown(!markdown);
     }
 }

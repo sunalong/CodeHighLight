@@ -31,6 +31,7 @@ import android.webkit.WebViewClient;
 	public SourceEditor(WebView webView) {
 		WebViewClient client = new WebViewClient();
 		webView.setWebViewClient(client);
+		
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		settings.setBuiltInZoomControls(true);//可缩放
@@ -43,10 +44,8 @@ import android.webkit.WebViewClient;
 		this.name = name;
 		this.content = content;
 		this.encoded = encoded;
-//		this.content= "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KCjxwcm9qZWN0IHhtbG5zPSJodHRwOi8vbWF2ZW4uYXBhY2hlLm9yZy9QT00vNC4wLjAiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL21hdmVuLmFwYWNoZS5vcmcvUE9NLzQuMC4wIGh0dHA6Ly9tYXZlbi5hcGFjaGUub3JnL21hdmVuLXY0XzBfMC54c2QiPgogIDxtb2RlbFZlcnNpb24+NC4wLjA8L21vZGVsVmVyc2lvbj4KCiAgPHBhcmVudD4KICAgIDxncm91cElkPm9yZy5zb25hdHlwZS5vc3M8L2dyb3VwSWQ+CiAgICA8YXJ0aWZhY3RJZD5vc3MtcGFyZW50PC9hcnRpZmFjdElkPgogICAgPHZlcnNpb24+NzwvdmVyc2lvbj4KICA8L3BhcmVudD4KCiAgPGdyb3VwSWQ+Y29tLmFjdGlvbmJhcnNoZXJsb2NrPC9ncm91cElkPgogIDxhcnRpZmFjdElkPnBhcmVudDwvYXJ0aWZhY3RJZD4KICA8cGFja2FnaW5nPnBvbTwvcGFja2FnaW5nPgogIDx2ZXJzaW9uPjQuNC4wPC92ZXJzaW9uPgoKICA8bmFtZT5BY3Rpb25CYXJTaGVybG9jayAoUGFyZW50KTwvbmFtZT4K";
 		Log.i(TAG,"MysetSourceContent:"+this.content);
 		webView.loadUrl(URL_PAGE);
-//		webView.loadData(this.content, "text/html", null);
 		return null;
 	}
 
@@ -61,6 +60,7 @@ import android.webkit.WebViewClient;
 	public boolean isEncoded() {
 		return encoded;
 	}
+	
 
 	public void setEncoded(boolean encoded) {
 		this.encoded = encoded;
@@ -78,8 +78,7 @@ import android.webkit.WebViewClient;
             return getRawContent();
 	}
 
-	private String getRawContent() {
-		// TODO Auto-generated method stub
+	public String getRawContent() {
 		return content;
 	}
 
@@ -87,5 +86,13 @@ import android.webkit.WebViewClient;
 		this.content = content;
 	}
 	
+	public boolean wrap;
+	public boolean getWrap() {
+		return wrap;
+	}
+
+	public void setWrap(boolean wrap) {
+		this.wrap = wrap;
+	}
 	
 }

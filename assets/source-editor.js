@@ -140,24 +140,24 @@ function loadImage(type, content) {
 }
 
 window.onload = function () {
-  var name = new String(CopyOfSourceEditor.getName());
+  var name = new String(SourceEditor.getName());
   var extension = getExtension(name);
   if ("png" == extension || "gif" == extension) {
-    loadImage(extension, CopyOfSourceEditor.getRawContent());
+    loadImage(extension, SourceEditor.getRawContent());
     return;
   } else if ("jpg" == extension || "jpeg" == extension) {
-    loadImage("jpeg", CopyOfSourceEditor.getRawContent());
+    loadImage("jpeg", SourceEditor.getRawContent());
     return;
   }
 
   CodeMirror.modeURL = "mode/%N/%N.js";
 
   var config = {};
-  config.value = new String(CopyOfSourceEditor.getContent());
+  config.value = new String(SourceEditor.getContent());
   config.readOnly = "nocursor";
   config.lineNumbers = true;
   config.autofocus = false;
-  config.lineWrapping = !!CopyOfSourceEditor.getWrap();
+  config.lineWrapping = !!SourceEditor.getWrap();
   config.dragDrop = false;
   var editor = CodeMirror(document.body, config);
 
