@@ -27,9 +27,10 @@ public final class R {
         public static final int spinner_outer=0x7f020003;
     }
     public static final class id {
-        public static final int action_settings=0x7f080002;
-        public static final int pbLoading=0x7f080001;
-        public static final int wvCode=0x7f080000;
+        public static final int action_settings=0x7f080003;
+        public static final int btSelect=0x7f080000;
+        public static final int pbLoading=0x7f080002;
+        public static final int wvCode=0x7f080001;
     }
     public static final class layout {
         public static final int activity_view_code=0x7f030000;
