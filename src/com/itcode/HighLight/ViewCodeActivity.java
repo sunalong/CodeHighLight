@@ -75,6 +75,7 @@ public class ViewCodeActivity extends Activity implements OnClickListener {
 	}
 
 	private void setSource() {
+		btSelect.setVisibility(View.GONE);
 		sourceEditor = new SourceEditor(wvCodeView);// 设置代码编辑器//设置内容//设置文件名后缀
 		// TODO:打开文件读取内容
 		// TODO:注册此类打开文件的选择：如同打开视频时选择播放器一样
