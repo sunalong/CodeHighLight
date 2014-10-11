@@ -4,9 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URL;
+
+import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,8 +44,8 @@ public class ViewCodeActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_view_code);
 		content = "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KCjxwcm9qZWN0IHhtbG5zPSJodHRwOi8vbWF2ZW4uYXBhY2hlLm9yZy9QT00vNC4wLjAiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL21hdmVuLmFwYWNoZS5vcmcvUE9NLzQuMC4wIGh0dHA6Ly9tYXZlbi5hcGFjaGUub3JnL21hdmVuLXY0XzBfMC54c2QiPgogIDxtb2RlbFZlcnNpb24+NC4wLjA8L21vZGVsVmVyc2lvbj4KCiAgPHBhcmVudD4KICAgIDxncm91cElkPm9yZy5zb25hdHlwZS5vc3M8L2dyb3VwSWQ+CiAgICA8YXJ0aWZhY3RJZD5vc3MtcGFyZW50PC9hcnRpZmFjdElkPgogICAgPHZlcnNpb24+NzwvdmVyc2lvbj4KICA8L3BhcmVudD4KCiAgPGdyb3VwSWQ+Y29tLmFjdGlvbmJhcnNoZXJsb2NrPC9ncm91cElkPgogIDxhcnRpZmFjdElkPnBhcmVudDwvYXJ0aWZhY3RJZD4KICA8cGFja2FnaW5nPnBvbTwvcGFja2FnaW5nPgogIDx2ZXJzaW9uPjQuNC4wPC92ZXJzaW9uPgoKICA8bmFtZT5BY3Rpb25CYXJTaGVybG9jayAoUGFyZW50KTwvbmFtZT4K";
 		initView();
-//		selectFile();
-//		setSource();
+		// selectFile();
+		// setSource();
 	}
 
 	private void selectFile() {
@@ -53,19 +58,33 @@ public class ViewCodeActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if(data !=null){
+		if (data != null) {
 			content = data.getDataString();
+			Log.i(TAG, "content:" + content);
 			// onActivityResult:file:///mnt/sdcard/2/LightAlertDialog.java
 			try {
-				FileReader fr = new FileReader("mnt/sdcard/2/LightAlertDialog.java");
+				String path = content.substring("file://".length());
+				Log.i(TAG, "path:" + path);
+				/**
+				 * path:/mnt/sdcard/2/%E7%9C%9F%E5%A5%BD%E5%90%83%E5%BC%80%E5%BC
+				 * %80%40%E6%98%AF.java decode
+				 * decode path:/mnt/sdcard/2/真好吃开开@是.java
+				 */
+
+				path = Uri.decode(content);//
+				Log.i(TAG, "decode path:" + path);
+				path = path.substring("file://".length());
+				Log.i(TAG, "decode path trim:" + path);
+
+				FileReader fr = new FileReader(path);
 				BufferedReader br = new BufferedReader(fr);
 				StringBuilder sb = new StringBuilder();
 				String line = null;
-				while((line = br.readLine())!=null){
+				while ((line = br.readLine()) != null) {
 					sb.append(line).append("\n");
 				}
 				content = sb.toString();
-				Log.i(TAG,"onActivityResult:"+content);
+				// Log.i(TAG,"onActivityResult:"+content);
 				setSource();
 			} catch (Exception e) {
 				e.printStackTrace();
